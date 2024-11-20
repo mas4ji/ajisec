@@ -178,6 +178,21 @@
             transform: rotate(180deg);
         }
 
+        .linkedin-follow {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .linkedin-follow a {
+            font-size: 2em;
+            color: #0077b5;
+            transition: color 0.3s ease;
+        }
+
+        .linkedin-follow a:hover {
+            color: #005582;
+        }
+
         @media (max-width: 768px) {
             body {
                 padding: 20px;
@@ -212,6 +227,12 @@
 <section>
     <p>Explore these advanced Google Dorks to help you in your bug hunting and vulnerability research.</p>
 </section>
+
+<div class="linkedin-follow">
+    <a href="https://www.linkedin.com/in/your-profile-link" target="_blank">
+        <i class="fab fa-linkedin"></i>
+    </a>
+</div>
 
 <script>
     const domainInput = document.getElementById('domainInput');
