@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Dorks AjiSec</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Font Awesome -->
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --background-color-dark: #111111;
+            --background-color-light: #f4f4f4;
+            --text-color-dark: #ffffff;
+            --text-color-light: #000000;
+            --accent-color: #69f0ae;
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--background-color-dark);
+            color: var(--text-color-dark);
+            padding: 40px 20px;
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-align: center;
+        }
+
+        .search-container {
+            margin: 40px 0;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+            color: #888;
+        }
+
+        input {
+            width: 100%;
+            max-width: 500px;
+            font-size: 1.1em;
+            padding: 12px 20px;
+            border: none;
+            border-bottom: 2px solid var(--border-color);
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-color-dark);
+            transition: all 0.3s ease;
+            border-radius: 4px;
+        }
+
+        input:focus {
+            outline: none;
+            border-bottom-color: var(--accent-color);
+            background-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .social-links {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .social-links a {
+            display: inline-block;
+            margin: 0 10px;
+            padding: 8px 16px;
+            color: #888;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent-color);
+        }
+
+        #dorkList {
+            margin: 40px 0;
+            padding: 0;
+        }
+
+        li {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--border-color);
+            transition: transform 0.2s ease;
+        }
+
+        li:hover {
+            transform: translateX(10px);
+        }
+
+        a {
+            text-decoration: none;
+            color: var(--text-color-dark);
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: var(--accent-color);
+        }
+
+        p.description {
+            color: #888;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        section {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        h2 {
+            font-size: 1.8em;
+            color: #888;
+            margin-bottom: 20px;
+        }
+
+        #tooltip {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.9);
+            color: #888;
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            z-index: 1000;
+            max-width: 300px;
+        }
+
+        #loading {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            font-size: 1.5em;
+            color: var(--accent-color);
+        }
+
+        .dark-mode {
+            background-color: var(--background-color-dark);
+            color: var(--text-color-dark);
+        }
+
+        .light-mode {
+            background-color: var(--background-color-light);
+            color: var(--text-color-light);
+        }
+
+        .mode-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 10px;
+            background-color: transparent;
+            border: none;
+            font-size: 1.8em;
+            color: var(--accent-color);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .mode-toggle:hover {
+            transform: rotate(180deg);
+        }
+
+        .linkedin-follow {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .linkedin-follow a {
+            font-size: 2em;
+            color: #0077b5;
+            transition: color 0.3s ease;
+        }
+
+        .linkedin-follow a:hover {
+            color: #005582;
+        }
+
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+
+            input {
+                width: calc(100% - 40px);
+            }
+        }
+    </style>
+</head>
+<body class="dark-mode">
+<div class="container">
+    <h1>Google Dorks AjiSec</h1>
+    <h3 class="center" style="text-align: center;">Tools For Bug Hunter</h3>
+</div>
+
+<div class="search-container">
+    <label for="domainInput">Enter a domain:</label>
+    <input type="text" id="domainInput" placeholder="cianjurkab.go.id" oninput="updateDomain()">
+</div>
+
+<div id="tooltip" class="hidden">For multiple domains, separate by comma. e.g., cianjurkab.go.id, anotherdomain.com</div>
+<div id="loading">Loading...</div>
+
+<button class="mode-toggle" onclick="toggleMode()">
+    <i class="fas fa-moon"></i> <!-- Icon for dark mode -->
+</button>
+
+<ul id="dorkList"></ul>
+
+<section>
+    <p>Explore these advanced Google Dorks to help you in your bug hunting and vulnerability research.</p>
+</section>
+
+<div class="linkedin-follow">
+    <a href="https://www.linkedin.com/in/fazriansyahmuh" target="_blank">
+        <i class="fab fa-linkedin"></i>
+    </a>
+</div>
+
+<script>
+    const domainInput = document.getElementById('domainInput');
+    const tooltip = document.getElementById('tooltip');
+    const loading = document.getElementById('loading');
+    const modeToggle = document.querySelector('.mode-toggle');
+    let originalDorks = [];
+
+    // Show loading spinner while fetching dorks
+    loading.style.display = 'block';
+
+    async function fetchDorks() {
+        const url = "https://raw.githubusercontent.com/TakSec/google-dorks-bug-bounty/main/README.md";
+        const response = await fetch(url);
+        const text = await response.text();
+
+        const dorkList = document.getElementById("dorkList");
+        const regex = /(?:^### (.+)|```([^`]+)```)/gm;
+        let match;
+        let title = '';
+        let firstDork = true;
+
+        while ((match = regex.exec(text)) !== null) {
+            if (match[1]) {
+                title = match[1];
+            } else if (match[2]) {
+                const dork = match[2].trim();
+                originalDorks.push(dork);
+                const listItem = createDorkListItem(dork, title);
+                dorkList.appendChild(listItem);
+                title = '';
+            }
+        }
+
+        loading.style.display = 'none';
+        filterDorks();
+    }
+
+    function createDorkListItem(dork, description) {
+        const googleLink = `https://www.google.com/search?q=${encodeURIComponent(dork)}`;
+        const listItem = document.createElement("li");
+
+        if (description) {
+            const desc = document.createElement("p");
+            desc.textContent = description;
+            desc.classList.add("description");
+            listItem.appendChild(desc);
+        }
+
+        const link = document.createElement("a");
+        link.href = googleLink;
+        link.textContent = dork;
+        link.classList.add("dorkLink");
+        link.target = "_blank";
+        listItem.appendChild(link);
+
+        return listItem;
+    }
+
+    function updateDomain() {
+        const domains = domainInput.value.split(',').map(domain => domain.trim()).filter(Boolean);
+        tooltip.style.display = domains.length === 0 ? 'block' : 'none';
+
+        if (domains.length === 0) return;
+
+        const dorkLinks = document.querySelectorAll(".dorkLink");
+        dorkLinks.forEach((link, index) => {
+            let originalDork = originalDorks[index];
+
+            // Automatically replace all instances of "example[.]com" with user-entered domains
+            domains.forEach(domain => {
+                originalDork = originalDork.replace(/example[\[\]]*\.com/g, domain);
+            });
+
+            const updatedLink = `https://www.google.com/search?q=${encodeURIComponent(originalDork)}`;
+            link.textContent = originalDork;
+            link.href = updatedLink;
+        });
+    }
+
+    function toggleMode() {
+        document.body.classList.toggle('light-mode');
+        document.body.classList.toggle('dark-mode');
+    }
+
+    fetchDorks();
+</script>
+</body>
+</html>
